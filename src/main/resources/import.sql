@@ -1,0 +1,2 @@
+INSERT INTO tb_user (name, email, date_of_birth, age) VALUES ('Jefferson', 'jefferson@email.com', '1987-04-04', 36);
+INSERT INTO tb_user (name, email, date_of_birth, age) VALUES ('Julio', 'julio@email.com', '2010-07-22', 13);
