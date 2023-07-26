@@ -1,18 +1,20 @@
 package com.jwiltenburg.api.controllers
 
 import com.jwiltenburg.api.controllers.request.UserRequest
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.jwiltenburg.api.services.UserService
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api")
-class UserController {
+class UserController(
+        val userService: UserService
+) {
 
     @PostMapping("/user")
+    @ResponseStatus(HttpStatus.CREATED)
     fun createUser(@RequestBody userRequest: UserRequest) {
-        println(userRequest)
+        userService.create(userRequest)
     }
 
 }

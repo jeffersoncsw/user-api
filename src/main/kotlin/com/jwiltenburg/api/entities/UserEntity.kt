@@ -7,7 +7,7 @@ import java.time.LocalDate
 data class UserEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long,
+        val id: Long? = null,
 
         @Column(name = "name_user", nullable = false)
         val name: String,
