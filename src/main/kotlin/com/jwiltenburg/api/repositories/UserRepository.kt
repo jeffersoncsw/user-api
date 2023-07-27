@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
 interface UserRepository: JpaRepository<UserEntity, Long> {
-    fun findByNameContaining(name: String): List<UserEntity>
+    fun findByNameContainingIgnoreCase(name: String): List<UserEntity>
     fun findByUuid(uuid: String): Optional<UserEntity>
 }

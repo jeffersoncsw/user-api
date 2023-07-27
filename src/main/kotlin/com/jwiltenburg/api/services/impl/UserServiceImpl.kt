@@ -30,7 +30,7 @@ class UserServiceImpl(
     }
 
     override fun findByNameUser(name: String?): List<UserResponse> {
-        val existName = name?.let { userRepository.findByNameContaining(it) }
+        val existName = name?.let { userRepository.findByNameContainingIgnoreCase(it) }
         if(existName!!.isEmpty()){
             throw RuntimeException("Não existe nenhum recurso cadastrado na base de dados.")
         }
