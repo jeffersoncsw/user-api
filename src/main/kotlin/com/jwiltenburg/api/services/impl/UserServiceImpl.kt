@@ -1,6 +1,7 @@
 package com.jwiltenburg.api.services.impl
 
 import com.jwiltenburg.api.controllers.request.UserRequest
+import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.entities.UserEntity
 import com.jwiltenburg.api.extensions.toUserEntity
@@ -36,4 +37,18 @@ class UserServiceImpl(
         return existName.map { it.toUserResponse() }
     }
 
+    override fun updateUser(uuid: String, userUpdateRequest: UserUpdateRequest) {
+        val existsByUuid = userRepository.findByUuid(uuid)
+        if(!existsByUuid.isPresent){
+            throw RuntimeException("Não existe nenhum recurso cadastrado na base de dados.")
+        }
+        val id: Long? = this.getById(uuid)
+        val entity = userRepository.findById(id!!)
+        userRepository.saveAndFlush(userUpdateRequest.toUserEntity(entity.get()))
+    }
+
+    fun getById(uuid: String): Long?{
+        val userEntity = userRepository.findByUuid(uuid)
+        return userEntity.get().id
+    }
 }

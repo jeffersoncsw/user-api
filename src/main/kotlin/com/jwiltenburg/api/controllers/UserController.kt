@@ -1,6 +1,7 @@
 package com.jwiltenburg.api.controllers
 
 import com.jwiltenburg.api.controllers.request.UserRequest
+import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.services.UserService
 import org.springframework.data.domain.Page
@@ -29,6 +30,12 @@ class UserController(
     @GetMapping("/user/{name}")
     fun findByNameUser(@PathVariable("name") name: String): List<UserResponse>{
         return userService.findByNameUser(name)
+    }
+
+    @PutMapping("user/{uuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun updateUser(@PathVariable uuid: String, @RequestBody userUpdateRequest: UserUpdateRequest){
+        return userService.updateUser(uuid, userUpdateRequest)
     }
 
 }

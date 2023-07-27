@@ -1,6 +1,7 @@
 package com.jwiltenburg.api.extensions
 
 import com.jwiltenburg.api.controllers.request.UserRequest
+import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.entities.UserEntity
 
@@ -17,7 +18,18 @@ fun UserRequest.toUserEntity(): UserEntity{
 fun UserEntity.toUserResponse(): UserResponse{
     return UserResponse(
             name = this.name,
-            uuid = this.uuid,
+            uuid = this.uuid!!,
+            email = this.email,
+            dateOfBirth = this.dateOfBirth,
+            age = this.age
+    )
+}
+
+fun UserUpdateRequest.toUserEntity(previousValue: UserEntity): UserEntity{
+    return UserEntity(
+            id = previousValue.id,
+            name = this.name,
+            uuid = previousValue.uuid,
             email = this.email,
             dateOfBirth = this.dateOfBirth,
             age = this.age
