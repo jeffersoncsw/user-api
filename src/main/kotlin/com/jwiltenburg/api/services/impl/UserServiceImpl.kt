@@ -26,7 +26,7 @@ class UserServiceImpl(
     override fun getAllUsers(page: Pageable): Page<UserResponse> {
         val pages = userRepository.findAll(page)
         if(pages.isEmpty){
-            throw NotFoundException(message = Errors.U0001.message, errorCode = Errors.U0001.code)
+            throw NotFoundException(message = Errors.U1001.message, errorCode = Errors.U1001.code)
         }
         return pages.map { it.toUserResponse() }
     }
@@ -34,7 +34,7 @@ class UserServiceImpl(
     override fun findByNameUser(name: String?): List<UserResponse> {
         val existName = name?.let { userRepository.findByNameContainingIgnoreCase(it) }
         if(existName!!.isEmpty()){
-            throw NotFoundException(message = Errors.U0002.message.format(name), errorCode = Errors.U0002.code)
+            throw NotFoundException(message = Errors.U1002.message.format(name), errorCode = Errors.U1002.code)
         }
         return existName.map { it.toUserResponse() }
     }
@@ -63,7 +63,7 @@ class UserServiceImpl(
     private fun getByUuid(uuid: String) {
         val existsByUuid = userRepository.findByUuid(uuid)
         if (!existsByUuid.isPresent) {
-            throw NotFoundException(message = Errors.U0003.message.format(uuid), errorCode = Errors.U0003.code)
+            throw NotFoundException(message = Errors.U1003.message.format(uuid), errorCode = Errors.U1003.code)
         }
     }
 

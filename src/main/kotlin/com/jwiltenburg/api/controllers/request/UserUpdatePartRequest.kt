@@ -7,12 +7,12 @@ data class UserUpdatePartRequest (
 
         var name: String?,
 
-        @field:Email
+        @field:Email(message = "{email.validation}")
         var email: String?,
 
-        @field:Past
+        @field:Past(message = "{dateofbirth.past}")
         var dateOfBirth: LocalDate?,
 
-        @field:Min(1)
+        @field:Min(1, message = "{age.min}")
         var age: Int?,
 )
