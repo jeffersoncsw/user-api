@@ -9,6 +9,9 @@ data class UserEntity (
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
 
+        @Column(name = "uuid_user", nullable = false)
+        val uuid: String,
+
         @Column(name = "name_user", nullable = false)
         val name: String,
 

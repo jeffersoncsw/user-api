@@ -7,6 +7,7 @@ import com.jwiltenburg.api.entities.UserEntity
 fun UserRequest.toUserEntity(): UserEntity{
     return UserEntity(
             name = this.name,
+            uuid = this.uuid,
             email = this.email,
             dateOfBirth = this.dateOfBirth,
             age = this.age
@@ -16,6 +17,7 @@ fun UserRequest.toUserEntity(): UserEntity{
 fun UserEntity.toUserResponse(): UserResponse{
     return UserResponse(
             name = this.name,
+            uuid = this.uuid,
             email = this.email,
             dateOfBirth = this.dateOfBirth,
             age = this.age
