@@ -25,9 +25,15 @@ class UserServiceImpl(
         if(isNull(pages)){
             throw RuntimeException("Não existe nenhum recurso cadastrado na base de dados.")
         }
-
         return pages.map { it.toUserResponse() }
     }
 
+    override fun findByNameUser(name: String?): List<UserResponse> {
+        val existName = name?.let { userRepository.findByNameContaining(it) }
+        if(existName!!.isEmpty()){
+            throw RuntimeException("Não existe nenhum recurso cadastrado na base de dados.")
+        }
+        return existName.map { it.toUserResponse() }
+    }
 
 }

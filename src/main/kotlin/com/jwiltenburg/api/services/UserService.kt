@@ -9,5 +9,6 @@ import org.springframework.data.domain.Pageable
 interface UserService {
     fun create(userRequest: UserRequest): UserEntity
     fun getAllUsers(page: Pageable): Page<UserResponse>
+    fun findByNameUser(name: String?): List<UserResponse>
 
 }

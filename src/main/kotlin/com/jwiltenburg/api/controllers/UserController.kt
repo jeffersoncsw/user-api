@@ -26,4 +26,9 @@ class UserController(
         return userService.getAllUsers(page)
     }
 
+    @GetMapping("/user/{name}")
+    fun findByNameUser(@PathVariable("name") name: String): List<UserResponse>{
+        return userService.findByNameUser(name)
+    }
+
 }
