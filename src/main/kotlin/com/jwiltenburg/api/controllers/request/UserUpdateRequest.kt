@@ -6,5 +6,5 @@ data class UserUpdateRequest (
         var name: String?,
         var email: String?,
         var dateOfBirth: LocalDate?,
-        var age: Integer?,
+        var age: Int?,
 )

@@ -7,5 +7,5 @@ data class UserResponse (
         val uuid: String,
         val email: String,
         val dateOfBirth: LocalDate,
-        val age: Integer,
+        val age: Int,
 )

@@ -22,5 +22,5 @@ data class UserEntity (
         val dateOfBirth: LocalDate,
 
         @Column(name = "age_user", nullable = false)
-        val age: Integer,
+        val age: Int,
 )

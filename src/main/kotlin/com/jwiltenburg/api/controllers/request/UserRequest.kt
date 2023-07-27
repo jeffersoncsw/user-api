@@ -8,5 +8,5 @@ data class UserRequest (
         val uuid: String = UUID.randomUUID().toString(),
         val email: String,
         val dateOfBirth: LocalDate,
-        val age: Integer,
+        val age: Int,
 )
