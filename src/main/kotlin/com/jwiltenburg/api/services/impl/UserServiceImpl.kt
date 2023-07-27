@@ -60,6 +60,10 @@ class UserServiceImpl(
         userRepository.deleteById(entity.get().id!!)
     }
 
+    override fun emailAvailable(email: String): Boolean {
+        return !userRepository.existsByEmail(email)
+    }
+
     private fun getByUuid(uuid: String) {
         val existsByUuid = userRepository.findByUuid(uuid)
         if (!existsByUuid.isPresent) {

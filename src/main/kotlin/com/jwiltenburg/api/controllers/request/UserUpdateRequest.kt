@@ -1,5 +1,6 @@
 package com.jwiltenburg.api.controllers.request
 
+import com.jwiltenburg.api.validation.EmailAvailable
 import jakarta.validation.constraints.*
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
@@ -11,6 +12,7 @@ data class UserUpdateRequest (
 
         @field:Email(message = "{email.validation}")
         @field:NotEmpty(message = "{email.notempty}")
+        @EmailAvailable
         val email: String,
 
         @field:NotNull(message = "{dateofbirth.notnull}")

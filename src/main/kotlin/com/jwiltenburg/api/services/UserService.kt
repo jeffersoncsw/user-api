@@ -15,5 +15,6 @@ interface UserService {
     fun updateUser(uuid: String, userUpdateRequest: UserUpdateRequest)
     fun updatePartUser(uuid: String, userUpdatePartRequest: UserUpdatePartRequest)
     fun deleteUser(uuid: String)
+    fun emailAvailable(email: String): Boolean
 
 }
