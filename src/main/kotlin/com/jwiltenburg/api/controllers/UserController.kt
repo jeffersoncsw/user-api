@@ -1,9 +1,11 @@
 package com.jwiltenburg.api.controllers
 
 import com.jwiltenburg.api.controllers.request.UserRequest
+import com.jwiltenburg.api.controllers.request.UserUpdatePartRequest
 import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.services.UserService
+import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -18,7 +20,7 @@ class UserController(
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@RequestBody userRequest: UserRequest) {
+    fun createUser(@RequestBody @Valid userRequest: UserRequest) {
         userService.create(userRequest)
     }
 
@@ -34,14 +36,14 @@ class UserController(
 
     @PutMapping("user/{uuid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun updateUser(@PathVariable uuid: String, @RequestBody userUpdateRequest: UserUpdateRequest){
+    fun updateUser(@PathVariable uuid: String, @RequestBody @Valid userUpdateRequest: UserUpdateRequest){
         return userService.updateUser(uuid, userUpdateRequest)
     }
 
     @PatchMapping("user/{uuid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun updatePartUser(@PathVariable uuid: String, @RequestBody userUpdateRequest: UserUpdateRequest){
-        return userService.updatePartUser(uuid, userUpdateRequest)
+    fun updatePartUser(@PathVariable uuid: String, @RequestBody @Valid userUpdatePartRequest: UserUpdatePartRequest){
+        return userService.updatePartUser(uuid, userUpdatePartRequest)
     }
 
     @DeleteMapping("user/{uuid}")

@@ -1,6 +1,7 @@
 package com.jwiltenburg.api.services.impl
 
 import com.jwiltenburg.api.controllers.request.UserRequest
+import com.jwiltenburg.api.controllers.request.UserUpdatePartRequest
 import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.entities.UserEntity
@@ -45,11 +46,11 @@ class UserServiceImpl(
         userRepository.saveAndFlush(userUpdateRequest.toUserEntity(entity.get()))
     }
 
-    override fun updatePartUser(uuid: String, userUpdateRequest: UserUpdateRequest) {
+    override fun updatePartUser(uuid: String, userUpdatePartRequest: UserUpdatePartRequest) {
         getByUuid(uuid)
         val id: Long? = this.getById(uuid)
         val entity = userRepository.findById(id!!)
-        userRepository.saveAndFlush(userUpdateRequest.toUserEntity(entity.get()))
+        userRepository.saveAndFlush(userUpdatePartRequest.toUserEntity(entity.get()))
     }
 
     override fun deleteUser(uuid: String) {
