@@ -28,10 +28,10 @@ fun UserEntity.toUserResponse(): UserResponse{
 fun UserUpdateRequest.toUserEntity(previousValue: UserEntity): UserEntity{
     return UserEntity(
             id = previousValue.id,
-            name = this.name,
+            name = this.name ?: previousValue.name,
             uuid = previousValue.uuid,
-            email = this.email,
-            dateOfBirth = this.dateOfBirth,
-            age = this.age
+            email = this.email ?: previousValue.email,
+            dateOfBirth = this.dateOfBirth ?: previousValue.dateOfBirth,
+            age = this.age ?: previousValue.age
     )
 }

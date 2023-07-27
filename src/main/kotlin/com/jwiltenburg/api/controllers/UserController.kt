@@ -38,4 +38,10 @@ class UserController(
         return userService.updateUser(uuid, userUpdateRequest)
     }
 
+    @PatchMapping("user/{uuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun updatePartUser(@PathVariable uuid: String, @RequestBody userUpdateRequest: UserUpdateRequest){
+        return userService.updatePartUser(uuid, userUpdateRequest)
+    }
+
 }

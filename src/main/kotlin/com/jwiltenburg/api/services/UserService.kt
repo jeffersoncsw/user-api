@@ -12,5 +12,6 @@ interface UserService {
     fun getAllUsers(page: Pageable): Page<UserResponse>
     fun findByNameUser(name: String?): List<UserResponse>
     fun updateUser(uuid: String, userUpdateRequest: UserUpdateRequest)
+    fun updatePartUser(uuid: String, userUpdateRequest: UserUpdateRequest)
 
 }

@@ -47,6 +47,16 @@ class UserServiceImpl(
         userRepository.saveAndFlush(userUpdateRequest.toUserEntity(entity.get()))
     }
 
+    override fun updatePartUser(uuid: String, userUpdateRequest: UserUpdateRequest) {
+        val existsByUuid = userRepository.findByUuid(uuid)
+        if(!existsByUuid.isPresent){
+            throw RuntimeException("Não existe nenhum recurso cadastrado na base de dados.")
+        }
+        val id: Long? = this.getById(uuid)
+        val entity = userRepository.findById(id!!)
+        userRepository.saveAndFlush(userUpdateRequest.toUserEntity(entity.get()))
+    }
+
     fun getById(uuid: String): Long?{
         val userEntity = userRepository.findByUuid(uuid)
         return userEntity.get().id
