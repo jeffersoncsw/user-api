@@ -4,6 +4,7 @@ import com.jwiltenburg.api.controllers.request.UserRequest
 import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.entities.UserEntity
+import com.jwiltenburg.api.enums.Errors
 import com.jwiltenburg.api.exceptions.NotFoundException
 import com.jwiltenburg.api.extensions.toUserEntity
 import com.jwiltenburg.api.extensions.toUserResponse
@@ -24,7 +25,7 @@ class UserServiceImpl(
     override fun getAllUsers(page: Pageable): Page<UserResponse> {
         val pages = userRepository.findAll(page)
         if(pages.isEmpty){
-            throw NotFoundException(message = "There is no resource registered in the database", errorCode = "U-0001")
+            throw NotFoundException(message = Errors.U0001.message, errorCode = Errors.U0001.code)
         }
         return pages.map { it.toUserResponse() }
     }
@@ -32,7 +33,7 @@ class UserServiceImpl(
     override fun findByNameUser(name: String?): List<UserResponse> {
         val existName = name?.let { userRepository.findByNameContainingIgnoreCase(it) }
         if(existName!!.isEmpty()){
-            throw NotFoundException(message = "The name $name does not exist", errorCode = "U-0002")
+            throw NotFoundException(message = Errors.U0002.message.format(name), errorCode = Errors.U0002.code)
         }
         return existName.map { it.toUserResponse() }
     }
@@ -61,7 +62,7 @@ class UserServiceImpl(
     private fun getByUuid(uuid: String) {
         val existsByUuid = userRepository.findByUuid(uuid)
         if (!existsByUuid.isPresent) {
-            throw NotFoundException(message = "UUID [$uuid] does not exist", errorCode = "U-0003")
+            throw NotFoundException(message = Errors.U0003.message.format(uuid), errorCode = Errors.U0003.code)
         }
     }
 
