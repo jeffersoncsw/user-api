@@ -57,6 +57,12 @@ class UserServiceImpl(
         userRepository.saveAndFlush(userUpdateRequest.toUserEntity(entity.get()))
     }
 
+    override fun deleteUser(uuid: String) {
+        val id = this.getById(uuid)
+        val entity = userRepository.findById(id!!)
+        userRepository.deleteById(entity.get().id!!)
+    }
+
     fun getById(uuid: String): Long?{
         val userEntity = userRepository.findByUuid(uuid)
         return userEntity.get().id

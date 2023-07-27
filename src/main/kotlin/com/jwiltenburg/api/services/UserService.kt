@@ -13,5 +13,6 @@ interface UserService {
     fun findByNameUser(name: String?): List<UserResponse>
     fun updateUser(uuid: String, userUpdateRequest: UserUpdateRequest)
     fun updatePartUser(uuid: String, userUpdateRequest: UserUpdateRequest)
+    fun deleteUser(uuid: String)
 
 }

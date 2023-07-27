@@ -44,4 +44,9 @@ class UserController(
         return userService.updatePartUser(uuid, userUpdateRequest)
     }
 
+    @DeleteMapping("user/{uuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteUser(@PathVariable uuid: String){
+        return userService.deleteUser(uuid)
+    }
 }
