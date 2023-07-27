@@ -13,40 +13,40 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/user")
 class UserController(
         val userService: UserService
 ) {
 
-    @PostMapping("/user")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createUser(@RequestBody @Valid userRequest: UserRequest) {
         userService.create(userRequest)
     }
 
-    @GetMapping("/user")
+    @GetMapping
     fun getAllUsers(@PageableDefault(page = 0, size = 10) page: Pageable): Page<UserResponse>{
         return userService.getAllUsers(page)
     }
 
-    @GetMapping("/user/{name}")
+    @GetMapping("/{name}")
     fun findByNameUser(@PathVariable("name") name: String): List<UserResponse>{
         return userService.findByNameUser(name)
     }
 
-    @PutMapping("user/{uuid}")
+    @PutMapping("/{uuid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateUser(@PathVariable uuid: String, @RequestBody @Valid userUpdateRequest: UserUpdateRequest){
         return userService.updateUser(uuid, userUpdateRequest)
     }
 
-    @PatchMapping("user/{uuid}")
+    @PatchMapping("/{uuid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updatePartUser(@PathVariable uuid: String, @RequestBody @Valid userUpdatePartRequest: UserUpdatePartRequest){
         return userService.updatePartUser(uuid, userUpdatePartRequest)
     }
 
-    @DeleteMapping("user/{uuid}")
+    @DeleteMapping("/{uuid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUser(@PathVariable uuid: String){
         return userService.deleteUser(uuid)
