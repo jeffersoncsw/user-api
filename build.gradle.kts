@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm") version "1.8.22"
 	kotlin("plugin.spring") version "1.8.22"
 	kotlin("plugin.jpa") version "1.8.22"
+	jacoco
 }
 
 group = "com.jwiltenburg"
@@ -28,7 +29,7 @@ dependencies {
 	implementation("com.h2database:h2:2.2.220")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.mockk:mockk:1.13.5")
+	testImplementation("org.mockito:mockito-core:5.4.0")
 }
 
 tasks.withType<KotlinCompile> {
