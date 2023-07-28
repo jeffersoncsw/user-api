@@ -6,6 +6,7 @@ import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.entities.UserEntity
 import com.jwiltenburg.api.extensions.toUserEntity
+import com.jwiltenburg.api.extensions.toUserResponse
 import com.jwiltenburg.api.repositories.UserRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -51,6 +52,22 @@ class UserServiceImplTest {
         userServiceImpl.create(fakeUser)
 
         verify(userRepository, times(1)).save(fakeUser.toUserEntity())
+
+    }
+
+    @Test
+    fun `should return users when name is informed`(){
+        val name = "Jefferson"
+
+        val fakeUsers = listOf(userRequest.toUserEntity())
+
+        `when`(userRepository.findByNameContainingIgnoreCase(name)).thenReturn(fakeUsers)
+
+        val nameUsers = userServiceImpl.findByNameUser(name)
+
+        assertEquals(fakeUsers.map { it.toUserResponse() }, nameUsers)
+
+        verify(userRepository, times(1)).findByNameContainingIgnoreCase(name)
 
     }
 
