@@ -142,6 +142,21 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).findByUuid(uuid)
     }
 
+    @Test
+    fun `should get for uuid return not found`(){
+        val uuid = UUID.randomUUID().toString()
+
+        `when`(userRepository.findByUuid(uuid)).thenReturn(Optional.empty())
+
+        val error = assertThrows<NotFoundException>{ userServiceImpl.getByUuid(uuid)}
+
+        assertEquals("UUID [ $uuid ] does not exist", error.message)
+        assertEquals("U-1003", error.errorCode)
+
+        verify(userRepository, times(1)).findByUuid(uuid)
+
+    }
+
     private fun createRequest(): UserRequest {
         return UserRequest(
                 name = "Jefferson",
