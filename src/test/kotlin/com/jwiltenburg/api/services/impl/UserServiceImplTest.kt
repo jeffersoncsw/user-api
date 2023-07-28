@@ -5,12 +5,14 @@ import com.jwiltenburg.api.controllers.request.UserUpdatePartRequest
 import com.jwiltenburg.api.controllers.request.UserUpdateRequest
 import com.jwiltenburg.api.controllers.response.UserResponse
 import com.jwiltenburg.api.entities.UserEntity
+import com.jwiltenburg.api.exceptions.NotFoundException
 import com.jwiltenburg.api.extensions.toUserEntity
 import com.jwiltenburg.api.extensions.toUserResponse
 import com.jwiltenburg.api.repositories.UserRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -69,6 +71,20 @@ class UserServiceImplTest {
 
         verify(userRepository, times(1)).findByNameContainingIgnoreCase(name)
 
+    }
+
+    @Test
+    fun `should throw error when user not found`(){
+        val name = "Jefferson"
+
+        `when`(userRepository.findByNameContainingIgnoreCase(name)).thenReturn(emptyList())
+
+        val error = assertThrows<NotFoundException>{ userServiceImpl.findByNameUser(name)}
+
+        assertEquals("The name [ $name ] does not exist", error.message)
+        assertEquals("U-1002", error.errorCode)
+
+        verify(userRepository, times(1)).findByNameContainingIgnoreCase(name)
     }
 
     private fun createRequest(): UserRequest {
