@@ -117,6 +117,19 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).existsByEmail(email)
     }
 
+    @Test
+    fun `should return false when email unavailable`(){
+        val email = "${UUID.randomUUID().toString()}@email.com"
+
+        `when`(userRepository.existsByEmail(email)).thenReturn(true)
+
+        val emailAvailable = userServiceImpl.emailAvailable(email)
+
+        assertFalse(emailAvailable)
+
+        verify(userRepository, times(1)).existsByEmail(email)
+    }
+
     private fun createRequest(): UserRequest {
         return UserRequest(
                 name = "Jefferson",
