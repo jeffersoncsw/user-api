@@ -116,6 +116,7 @@ class UserServiceImplTest {
         userServiceImpl.updateUser(uuid, userUpdateRequest)
 
         verify(userRepository, times(2)).findByUuid(uuid)
+        verify(userRepository, times(1)).findById(userEntity.id!!)
         verify(userRepository, times(1)).saveAndFlush(userUpdateRequest.toUserEntity(fakeUser))
 
     }
@@ -132,7 +133,24 @@ class UserServiceImplTest {
         userServiceImpl.updatePartUser(uuid, userUpdatePartRequest)
 
         verify(userRepository, times(2)).findByUuid(uuid)
+        verify(userRepository, times(1)).findById(userEntity.id!!)
         verify(userRepository, times(1)).saveAndFlush(userUpdatePartRequest.toUserEntity(fakeUser))
+
+    }
+
+    @Test
+    fun `should delete user`(){
+        val uuid = UUID.randomUUID().toString()
+        val fakeUser = userEntity.copy(uuid = uuid)
+
+        `when`(userRepository.findByUuid(uuid)).thenReturn(Optional.of(fakeUser))
+        `when`(userRepository.findById(userEntity.id!!)).thenReturn(Optional.of(fakeUser))
+        doNothing().`when`(userRepository).deleteById(userEntity.id!!)
+
+        userServiceImpl.deleteUser(uuid)
+
+        verify(userRepository, times(2)).findByUuid(uuid)
+        verify(userRepository, times(1)).findById(userEntity.id!!)
 
     }
 
