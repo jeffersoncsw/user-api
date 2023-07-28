@@ -130,6 +130,18 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).existsByEmail(email)
     }
 
+    @Test
+    fun `should get for uuid`(){
+        val uuid = UUID.randomUUID().toString()
+        val fakeUser = userEntity.copy(uuid = uuid)
+
+        `when`(userRepository.findByUuid(uuid)).thenReturn(Optional.of(fakeUser))
+
+        userServiceImpl.getByUuid(uuid)
+
+        verify(userRepository, times(1)).findByUuid(uuid)
+    }
+
     private fun createRequest(): UserRequest {
         return UserRequest(
                 name = "Jefferson",

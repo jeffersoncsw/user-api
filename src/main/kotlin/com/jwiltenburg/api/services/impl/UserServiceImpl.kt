@@ -64,14 +64,14 @@ class UserServiceImpl(
         return !userRepository.existsByEmail(email)
     }
 
-    private fun getByUuid(uuid: String) {
+    fun getByUuid(uuid: String) {
         val existsByUuid = userRepository.findByUuid(uuid)
         if (!existsByUuid.isPresent) {
             throw NotFoundException(message = Errors.U1003.message.format(uuid), errorCode = Errors.U1003.code)
         }
     }
 
-    private fun getById(uuid: String): Long?{
+    fun getById(uuid: String): Long?{
         val userEntity = userRepository.findByUuid(uuid)
         return userEntity.get().id
     }
