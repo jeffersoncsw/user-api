@@ -121,6 +121,22 @@ class UserServiceImplTest {
     }
 
     @Test
+    fun `should update partial user`(){
+        val uuid = UUID.randomUUID().toString()
+        val fakeUser = userEntity.copy(uuid = uuid)
+
+        `when`(userRepository.findByUuid(uuid)).thenReturn(Optional.of(fakeUser))
+        `when`(userRepository.findById(userEntity.id!!)).thenReturn(Optional.of(fakeUser))
+        `when`(userRepository.saveAndFlush(userUpdatePartRequest.toUserEntity(fakeUser))).thenReturn(fakeUser)
+
+        userServiceImpl.updatePartUser(uuid, userUpdatePartRequest)
+
+        verify(userRepository, times(2)).findByUuid(uuid)
+        verify(userRepository, times(1)).saveAndFlush(userUpdatePartRequest.toUserEntity(fakeUser))
+
+    }
+
+    @Test
     fun `should return true when email available`(){
         val email = "${UUID.randomUUID().toString()}@email.com"
 
