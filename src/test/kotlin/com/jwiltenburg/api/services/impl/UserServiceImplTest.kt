@@ -59,9 +59,9 @@ class UserServiceImplTest {
 
     @Test
     fun `should return users when name is informed`(){
-        val name = "Jefferson"
+        val name = "jefferson"
 
-        val fakeUsers = listOf(userRequest.toUserEntity())
+        val fakeUsers = listOf(userRequest.toUserEntity(), userRequest.toUserEntity())
 
         `when`(userRepository.findByNameContainingIgnoreCase(name)).thenReturn(fakeUsers)
 
@@ -74,7 +74,23 @@ class UserServiceImplTest {
     }
 
     @Test
-    fun `should throw error when user not found`(){
+    fun `should return users when name is partial informed`(){
+        val name = "j"
+
+        val fakeUsers = listOf(userRequest.toUserEntity(), userRequest.toUserEntity())
+
+        `when`(userRepository.findByNameContainingIgnoreCase(name)).thenReturn(fakeUsers)
+
+        val nameUsers = userServiceImpl.findByNameUser(name)
+
+        assertEquals(fakeUsers.map { it.toUserResponse() }, nameUsers)
+
+        verify(userRepository, times(1)).findByNameContainingIgnoreCase(name)
+
+    }
+
+    @Test
+    fun `should throw error when user not found by name`(){
         val name = "Jefferson"
 
         `when`(userRepository.findByNameContainingIgnoreCase(name)).thenReturn(emptyList())

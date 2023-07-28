@@ -31,9 +31,9 @@ class UserServiceImpl(
         return pages.map { it.toUserResponse() }
     }
 
-    override fun findByNameUser(name: String?): List<UserResponse> {
-        val existName = name?.let { userRepository.findByNameContainingIgnoreCase(it) }
-        if(existName!!.isEmpty()){
+    override fun findByNameUser(name: String): List<UserResponse> {
+        val existName = name.let { userRepository.findByNameContainingIgnoreCase(it) }
+        if(existName.isEmpty()){
             throw NotFoundException(message = Errors.U1002.message.format(name), errorCode = Errors.U1002.code)
         }
         return existName.map { it.toUserResponse() }

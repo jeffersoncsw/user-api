@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable
 interface UserService {
     fun create(userRequest: UserRequest): UserEntity
     fun getAllUsers(page: Pageable): Page<UserResponse>
-    fun findByNameUser(name: String?): List<UserResponse>
+    fun findByNameUser(name: String): List<UserResponse>
     fun updateUser(uuid: String, userUpdateRequest: UserUpdateRequest)
     fun updatePartUser(uuid: String, userUpdatePartRequest: UserUpdatePartRequest)
     fun deleteUser(uuid: String)
