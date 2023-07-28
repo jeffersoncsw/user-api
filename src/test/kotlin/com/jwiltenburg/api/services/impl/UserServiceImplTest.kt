@@ -104,6 +104,19 @@ class UserServiceImplTest {
 
     }
 
+    @Test
+    fun `should return true when email available`(){
+        val email = "${UUID.randomUUID().toString()}@email.com"
+
+        `when`(userRepository.existsByEmail(email)).thenReturn(false)
+
+        val emailAvailable = userServiceImpl.emailAvailable(email)
+
+        assertTrue(emailAvailable)
+
+        verify(userRepository, times(1)).existsByEmail(email)
+    }
+
     private fun createRequest(): UserRequest {
         return UserRequest(
                 name = "Jefferson",
