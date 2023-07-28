@@ -85,6 +85,7 @@ class UserServiceImplTest {
         assertEquals("U-1002", error.errorCode)
 
         verify(userRepository, times(1)).findByNameContainingIgnoreCase(name)
+
     }
 
     private fun createRequest(): UserRequest {
