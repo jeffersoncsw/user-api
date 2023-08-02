@@ -17,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -70,6 +71,21 @@ class UserServiceImplTest {
         val responsePaginated = userServiceImpl.getAllUsers(falsePagination)
 
         assertEquals(fakePagedList.map { it.toUserResponse() }, responsePaginated)
+
+        verify(userRepository, times(1)).findAll(falsePagination)
+
+    }
+
+    @Test
+    fun `should throw an error when the resource is not found in the database`(){
+        val falsePagination = PageRequest.of(1,2)
+
+        `when`(userRepository.findAll(falsePagination)).thenReturn(Page.empty())
+
+        val error = assertThrows<NotFoundException>{ userServiceImpl.getAllUsers(falsePagination)}
+
+        assertEquals("There is no resource registered in the database", error.message)
+        assertEquals("U-1001", error.errorCode)
 
         verify(userRepository, times(1)).findAll(falsePagination)
 
