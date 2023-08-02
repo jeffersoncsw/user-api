@@ -17,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDate
 import java.util.*
@@ -54,6 +56,22 @@ class UserServiceImplTest {
         userServiceImpl.create(fakeUser)
 
         verify(userRepository, times(1)).save(fakeUser.toUserEntity())
+
+    }
+
+    @Test
+    fun `should return all users`(){
+        val lista = listOf(userRequest.toUserEntity(), userRequest.copy(email = "jeff@email.com").toUserEntity());
+        val pagination = PageRequest.of(1,2)
+        val listaPaginada = PageImpl(lista, pagination, lista.size.toLong())
+
+        `when`(userRepository.findAll(pagination)).thenReturn(listaPaginada)
+
+        val responsePage = userServiceImpl.getAllUsers(pagination)
+
+        assertEquals(listaPaginada.map { it.toUserResponse() }, responsePage)
+
+        verify(userRepository, times(1)).findAll(pagination)
 
     }
 
