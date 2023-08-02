@@ -61,17 +61,17 @@ class UserServiceImplTest {
 
     @Test
     fun `should return all users`(){
-        val lista = listOf(userRequest.toUserEntity(), userRequest.copy(email = "jeff@email.com").toUserEntity());
-        val pagination = PageRequest.of(1,2)
-        val listaPaginada = PageImpl(lista, pagination, lista.size.toLong())
+        val fakeList = listOf(userRequest.toUserEntity(), userRequest.copy(email = "jeff@email.com").toUserEntity());
+        val falsePagination = PageRequest.of(1,2)
+        val fakePagedList = PageImpl(fakeList, falsePagination, fakeList.size.toLong())
 
-        `when`(userRepository.findAll(pagination)).thenReturn(listaPaginada)
+        `when`(userRepository.findAll(falsePagination)).thenReturn(fakePagedList)
 
-        val responsePage = userServiceImpl.getAllUsers(pagination)
+        val responsePaginated = userServiceImpl.getAllUsers(falsePagination)
 
-        assertEquals(listaPaginada.map { it.toUserResponse() }, responsePage)
+        assertEquals(fakePagedList.map { it.toUserResponse() }, responsePaginated)
 
-        verify(userRepository, times(1)).findAll(pagination)
+        verify(userRepository, times(1)).findAll(falsePagination)
 
     }
 
