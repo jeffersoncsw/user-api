@@ -26,4 +26,7 @@ data class UserRequest(
         @field:NotNull(message = "{age.notnull}")
         @field:Min(1, message = "{age.min}")
         val age: Int,
+
+        @field:NotEmpty(message = "{password.notempty}")
+        val password: String
 )

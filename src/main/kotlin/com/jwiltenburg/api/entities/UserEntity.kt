@@ -23,4 +23,7 @@ data class UserEntity (
 
         @Column(name = "age_user", nullable = false)
         val age: Int,
+
+        @Column(name = "password_user", nullable = false)
+        val password: String
 )

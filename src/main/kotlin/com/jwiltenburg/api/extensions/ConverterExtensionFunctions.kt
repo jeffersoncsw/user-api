@@ -12,7 +12,8 @@ fun UserRequest.toUserEntity(): UserEntity{
             uuid = this.uuid,
             email = this.email,
             dateOfBirth = this.dateOfBirth,
-            age = this.age
+            age = this.age,
+            password = this.password
     )
 }
 
@@ -33,7 +34,8 @@ fun UserUpdateRequest.toUserEntity(previousValue: UserEntity): UserEntity{
             uuid = previousValue.uuid,
             email = this.email,
             dateOfBirth = this.dateOfBirth ,
-            age = this.age
+            age = this.age,
+            password = previousValue.password
     )
 }
 
@@ -44,6 +46,7 @@ fun UserUpdatePartRequest.toUserEntity(previousValue: UserEntity): UserEntity{
             uuid = previousValue.uuid,
             email = this.email ?: previousValue.email,
             dateOfBirth = this.dateOfBirth ?: previousValue.dateOfBirth,
-            age = this.age ?: previousValue.age
+            age = this.age ?: previousValue.age,
+            password = previousValue.password
     )
 }
