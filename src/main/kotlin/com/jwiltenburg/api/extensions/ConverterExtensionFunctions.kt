@@ -13,7 +13,8 @@ fun UserRequest.toUserEntity(): UserEntity{
             email = this.email,
             dateOfBirth = this.dateOfBirth,
             age = this.age,
-            password = this.password
+            password = this.password,
+            roles = this.roles
     )
 }
 

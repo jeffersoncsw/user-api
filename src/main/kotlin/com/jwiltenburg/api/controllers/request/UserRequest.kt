@@ -1,5 +1,6 @@
 package com.jwiltenburg.api.controllers.request
 
+import com.jwiltenburg.api.enums.Profile
 import com.jwiltenburg.api.validation.EmailAvailable
 import jakarta.validation.constraints.*
 import org.springframework.format.annotation.DateTimeFormat
@@ -28,5 +29,7 @@ data class UserRequest(
         val age: Int,
 
         @field:NotEmpty(message = "{password.notempty}")
-        val password: String
+        val password: String,
+
+        val roles: Set<Profile> = setOf(Profile.USER)
 )

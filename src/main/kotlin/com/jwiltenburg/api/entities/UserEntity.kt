@@ -1,5 +1,6 @@
 package com.jwiltenburg.api.entities
 
+import com.jwiltenburg.api.enums.Profile
 import jakarta.persistence.*
 import java.time.LocalDate
 @Entity
@@ -25,5 +26,12 @@ data class UserEntity (
         val age: Int,
 
         @Column(name = "password_user", nullable = false)
-        val password: String
+        val password: String,
+
+        @Column(name = "role")
+        @Enumerated(EnumType.STRING)
+        @CollectionTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
+        @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
+        val roles: Set<Profile> = setOf()
+
 )
